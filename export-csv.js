@@ -5,6 +5,7 @@
  * Licence:  MIT
  * Version:  1.4.8
  */
+
 /*global Highcharts, window, document, Blob */
 (function (factory) {
     if (typeof module === 'object' && module.exports) {
@@ -13,7 +14,6 @@
         factory(Highcharts);
     }
 })(function (Highcharts) {
-
     'use strict';
 
     var each = Highcharts.each,
@@ -28,7 +28,6 @@
             viewData: 'View data table'
         }
     });
-
 
     /**
      * Get the data rows as a two dimensional array
@@ -74,7 +73,6 @@
             });
 
             if (series.options.includeInCSVExport !== false && series.visible !== false) { // #55
-
                 // Build a lookup for X axis index and the position of the first
                 // series that belongs to that X axis. Includes -1 for non-axis
                 // series types like pies.
@@ -131,7 +129,7 @@
             }
         }
 
-        var binding, xAxisIndex, column;
+        var xAxisIndex, column;
         dataRows = [names];
 
         i = xAxisIndices.length;
@@ -152,7 +150,6 @@
 
             // Add the category column
             each(rowArr, function (row) {
-
                 var category = row.name;
                 if (!category) {
                     if (xAxis.isDatetimeAxis) {
@@ -165,7 +162,7 @@
                             xAxis.names[row.x],
                             xAxis.categories[row.x],
                             row.x
-                        )
+                        );
                     } else {
                         category = row.x;
                     }
@@ -360,7 +357,6 @@
         this.dataTableDiv.innerHTML = this.getTable();
     };
 
-
     // Add "Download CSV" to the exporting menu. Use download attribute if supported, else
     // run a simple PHP script that returns a file. The source code for the PHP script can be viewed at
     // https://raw.github.com/highslide-software/highcharts.com/master/studies/csv-export/csv.php
@@ -387,5 +383,4 @@
     if (seriesTypes.treemap) {
         seriesTypes.treemap.prototype.exportKey = 'name';
     }
-
 });
