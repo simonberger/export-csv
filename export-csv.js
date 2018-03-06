@@ -30,6 +30,32 @@
     });
 
     /**
+     * Return the value of the first element in the array that satisfies the
+     * provided testing function.
+     *
+     * @function #find
+     * @memberOf Highcharts
+     * @param {Array} arr - The array to test.
+     * @param {Function} callback - The callback function. The function receives the
+     *        item as the first argument. Return `true` if this item satisfies the
+     *        condition.
+     * @returns {Mixed} - The value of the element.
+     */
+    function arrayFind(arr, callback) {
+        if (Array.prototype.find) {
+            return arr.find(callback);
+        }
+        // Legacy implementation. PhantomJS, IE <= 11 etc. #7223.
+        var length = arr.length;
+
+        for (var i = 0; i < length; i++) {
+            if (fn(arr[i], i)) {
+                return arr[i];
+            }
+        }
+    }
+
+    /**
      * Get the data rows as a two dimensional array
      */
     Highcharts.Chart.prototype.getDataRows = function () {
@@ -64,7 +90,7 @@
                 valueCount = pointArrayMap.length,
                 requireSorting = series.requireSorting,
                 categoryMap = {},
-                xAxisIndex = Highcharts.inArray(series.xAxis, xAxes),
+                xAxisIndex = Array.prototype.indexOf.call(xAxes, series.xAxis),
                 j;
 
             // Map the categories for value axes
@@ -76,7 +102,7 @@
                 // Build a lookup for X axis index and the position of the first
                 // series that belongs to that X axis. Includes -1 for non-axis
                 // series types like pies.
-                if (!Highcharts.find(xAxisIndices, function (index) {
+                if (!arrayFind(xAxisIndices, function (index) {
                     return index[0] === xAxisIndex;
                 })) {
                     xAxisIndices.push([xAxisIndex, i]);
