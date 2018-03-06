@@ -52,7 +52,7 @@
                         (item.isDatetimeAxis ? 'DateTime' : 'Category');
                 }
                 return item ?
-                    item.name + (keyLength > 1 ? ' (' + key + ')' : '') :
+                    item.name + (keyLength > 1 ? ' ('+ key + ')' : '') :
                     'Category';
             },
             xAxisIndices = [];
@@ -79,8 +79,8 @@
                 // series that belongs to that X axis. Includes -1 for non-axis
                 // series types like pies.
                 if (!Highcharts.find(xAxisIndices, function (index) {
-                        return index[0] === xAxisIndex;
-                    })) {
+                    return index[0] === xAxisIndex;
+                })) {
                     xAxisIndices.push([xAxisIndex, i]);
                 }
 
@@ -92,7 +92,7 @@
                 }
 
                 each(series.points, function (point, pIdx) {
-                    var key = requireSorting ? point.x : pIdx,
+                    var key = requireSorting ? point.x : point.x + '|' + pIdx,
                         prop,
                         val;
 
@@ -282,7 +282,7 @@
             blobObject = new Blob([content]);
             window.navigator.msSaveOrOpenBlob(blobObject, name + '.' + extension);
 
-            // Download attribute supported
+        // Download attribute supported
         } else if (downloadAttrSupported) {
             a = document.createElement('a');
             a.href = href;
@@ -367,19 +367,13 @@
     if (Highcharts.getOptions().exporting) {
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
             textKey: 'downloadCSV',
-            onclick: function () {
-                this.downloadCSV();
-            }
+            onclick: function () { this.downloadCSV(); }
         }, {
             textKey: 'downloadXLS',
-            onclick: function () {
-                this.downloadXLS();
-            }
+            onclick: function () { this.downloadXLS(); }
         }, {
             textKey: 'viewData',
-            onclick: function () {
-                this.viewData();
-            }
+            onclick: function () { this.viewData(); }
         });
     }
 
