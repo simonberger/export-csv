@@ -51,8 +51,8 @@
                     return (item.options.title && item.options.title.text) ||
                         (item.isDatetimeAxis ? 'DateTime' : 'Category');
                 }
-                return item ? 
-                    item.name + (keyLength > 1 ? ' ('+ key + ')' : '') :
+                return item ?
+                    item.name + (keyLength > 1 ? ' (' + key + ')' : '') :
                     'Category';
             },
             xAxisIndices = [];
@@ -79,8 +79,8 @@
                 // series that belongs to that X axis. Includes -1 for non-axis
                 // series types like pies.
                 if (!Highcharts.find(xAxisIndices, function (index) {
-                    return index[0] === xAxisIndex;
-                })) {
+                        return index[0] === xAxisIndex;
+                    })) {
                     xAxisIndices.push([xAxisIndex, i]);
                 }
 
@@ -106,7 +106,7 @@
                     }
                     rows[key].x = point.x;
                     rows[key].xValues[xAxisIndex] = point.x;
-                    
+
                     // Pies, funnels, geo maps etc. use point name in X row
                     if (!series.xAxis || series.exportKey === 'name') {
                         rows[key].name = point.name;
@@ -254,7 +254,7 @@
             if (!i) {
                 html += '</thead><tbody>';
             }
-            
+
         });
         html += '</tbody></table>';
 
@@ -282,7 +282,7 @@
             blobObject = new Blob([content]);
             window.navigator.msSaveOrOpenBlob(blobObject, name + '.' + extension);
 
-        // Download attribute supported
+            // Download attribute supported
         } else if (downloadAttrSupported) {
             a = document.createElement('a');
             a.href = href;
@@ -330,7 +330,7 @@
                 '</head><body>' +
                 this.getTable(true) +
                 '</body></html>',
-            base64 = function (s) { 
+            base64 = function (s) {
                 return window.btoa(unescape(encodeURIComponent(s))); // #50
             };
         getContent(
@@ -349,7 +349,7 @@
         if (!this.dataTableDiv) {
             this.dataTableDiv = document.createElement('div');
             this.dataTableDiv.className = 'highcharts-data-table';
-            
+
             // Insert after the chart container
             this.renderTo.parentNode.insertBefore(
                 this.dataTableDiv,
@@ -367,13 +367,19 @@
     if (Highcharts.getOptions().exporting) {
         Highcharts.getOptions().exporting.buttons.contextButton.menuItems.push({
             textKey: 'downloadCSV',
-            onclick: function () { this.downloadCSV(); }
+            onclick: function () {
+                this.downloadCSV();
+            }
         }, {
             textKey: 'downloadXLS',
-            onclick: function () { this.downloadXLS(); }
+            onclick: function () {
+                this.downloadXLS();
+            }
         }, {
             textKey: 'viewData',
-            onclick: function () { this.viewData(); }
+            onclick: function () {
+                this.viewData();
+            }
         });
     }
 
