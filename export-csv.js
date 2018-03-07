@@ -210,7 +210,7 @@
         var csv = '',
             rows = this.getDataRows(),
             options = (this.options.exporting || {}).csv || {},
-            itemDelimiter = options.itemDelimiter || ',', // use ';' for direct import to Excel
+            itemDelimiter = options.itemDelimiter || ';',
             lineDelimiter = options.lineDelimiter || '\n'; // '\n' isn't working with the js csv data extraction
 
         // Transform the rows to CSV
@@ -218,14 +218,19 @@
             var val = '',
                 j = row.length,
                 n = useLocalDecimalPoint ? (1.1).toLocaleString()[1] : '.';
+
             while (j--) {
                 val = row[j];
+
                 if (typeof val === "string") {
                     val = '"' + val + '"';
-                }
-                if (typeof val === 'number') {
+                } else if (typeof val === 'number') {
                     if (n === ',') {
                         val = val.toString().replace(".", ",");
+                    }
+                    // quote field if the item delimiter matches the decimal point
+                    if (n === itemDelimiter && val.indexOf(n) !== -1) {
+                        val = '"' + val + '"';
                     }
                 }
                 row[j] = val;
